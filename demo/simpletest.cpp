@@ -9,10 +9,10 @@
 void usage_1( void )
 {
 	printf("To build a B+ tree of a different order, start again and enter the order\n");
-	printf("as an integer argument:  bpt <order>  ");
+	printf("as an integer argument:  simpletest <order>  ");
 	printf("(%d <= order <= %d).\n", BPTREE_MIN_ORDER, BPTREE_MAX_ORDER);
 	printf("the order followed by the key length:\n"
-			"bpt <order> <key_length> .\n");
+			"simpletest <order> <key_length> .\n");
 }
 
 /* Second message to the user.
@@ -36,7 +36,7 @@ void usage_2( void )
  */
 void usage_3( void )
 {
-	printf("Usage: ./bpt [<order>]\n");
+	printf("Usage: ./simpletest [<order>]\n");
 	printf("\twhere %d <= order <= %d .\n", BPTREE_MIN_ORDER, BPTREE_MAX_ORDER);
 }
 
