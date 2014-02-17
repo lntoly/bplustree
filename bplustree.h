@@ -52,7 +52,7 @@
  * order arbitrarily.  You may change the maximum order.
  */
 #define BPTREE_MIN_ORDER 3
-#define BPTREE_MAX_ORDER 20
+#define BPTREE_MAX_ORDER 30
 
 /**
  * Default key length is 4
@@ -71,7 +71,7 @@
  * of the value field.
  */
 typedef struct record {
-	int value;
+	int value;	/**< Value of record.*/
 } record;
 
 /**
@@ -104,11 +104,11 @@ typedef struct record {
  * last leaf pointer points to the next leaf.
  */
 typedef struct node {
-	void ** pointers;
-	char ** keys;
-	struct node * parent;
-	bool is_leaf;
-	int num_keys;
+	void ** pointers;	/**< Array of pointers.*/
+	char ** keys;	/**< Array of keys.*/
+	struct node * parent; /**< Pointer of parent node.*/
+	bool is_leaf;	/**< Leaf node.*/
+	int num_keys;	/**< Number of valid keys.*/
 	struct node * next; /**< Used for queue.*/
 } node;
 
@@ -120,10 +120,10 @@ class BPTREE_INTERFACE_API BPlusTree
 public:
 	/**
 	 * BPlusTree constructor.
-	 * @param nOrder		order of B+ tree
-	 * @param nKeyLength	length of key
+	 * @param nOrder		Order of B+ tree(3~30,Default:4)
+	 * @param nKeyLength	Length of key(Default:4)
 	 */
-	BPlusTree(int nOrder = BPTREE_DEFAULT_ORDER, int nKeyLength = BPTREE_DEFAULT_KEY_LENGTH);
+	BPlusTree( int nOrder = BPTREE_DEFAULT_ORDER, int nKeyLength = BPTREE_DEFAULT_KEY_LENGTH );
 	
 	/**
 	 * BPlusTree destructor.
@@ -183,15 +183,38 @@ public:
 	record * Find( int key, bool verbose );
 	
 	/**
-	 * Destory the B+ tree.
+	 * Destroy the B+ tree.
 	 */
 	void DestroyBPTree();
 	
+	/**
+	 * Print the whole B+ tree.
+	 */
 	void PrintBPTree();
+	
+	/**
+	 * Print the leaves of B+ tree.
+	 */
 	void PrintBPTreeLeaves();
+	
+	/**
+	 * Finds and prints the record to which a key refers.
+	 * @param key		The key
+	 * @param verbose	Causes the pointer addresses to be printed out in hexadecimal notation next to their corresponding keys
+	 */
 	void FindAndPrint( char * key, bool verbose );
+	
+	/**
+	 * Finds and prints the record to which a key refers.
+	 * @param key		The key
+	 * @param verbose	Causes the pointer addresses to be printed out in hexadecimal notation next to their corresponding keys
+	 */
 	void FindAndPrint( int key, bool verbose );
 	
+	/**
+	 * Sets the verbose value.
+	 * @param verbose	Causes the pointer addresses to be printed out in hexadecimal notation next to their corresponding keys
+	 */
 	void SetVerbose( bool verbose );
 private:
 	void enqueue( node * new_node );
@@ -211,10 +234,8 @@ private:
 	int get_left_index( node * parent, node * left );
 	node * insert_into_leaf( node * leaf, char * key, record * pointer );
 	node * insert_into_leaf_after_splitting( node * root, node * leaf, char * key, record * pointer );
-	node * insert_into_node( node * root, node * parent, 
-			int left_index, char * key, node * right );
-	node * insert_into_node_after_splitting( node * root, node * parent, int left_index, 
-			char * key, node * right );
+	node * insert_into_node( node * root, node * parent, int left_index, char * key, node * right );
+	node * insert_into_node_after_splitting( node * root, node * parent, int left_index, char * key, node * right );
 	node * insert_into_parent( node * root, node * left, char * key, node * right );
 	node * insert_into_new_root( node * left, char * key, node * right );
 	node * start_new_tree( char * key, record * pointer );
@@ -223,8 +244,7 @@ private:
 	int get_neighbor_index( node * n );
 	node * adjust_root( node * root );
 	node * coalesce_nodes( node * root, node * n, node * neighbor, int neighbor_index, char * k_prime );
-	node * redistribute_nodes( node * root, node * n, node * neighbor, int neighbor_index, 
-			int k_prime_index, char * k_prime );
+	node * redistribute_nodes( node * root, node * n, node * neighbor, int neighbor_index, int k_prime_index, char * k_prime );
 	node * delete_entry( node * root, node * n, char * key, void * pointer );
 	node * remove_entry_from_node( node * n, char * key, node * pointer );
 	node * Delete(node * root, char * key);

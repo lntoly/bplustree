@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-BPlusTree::BPlusTree(int nOrder/* = BPTREE_DEFAULT_ORDER*/, int nKeyLength/* = BPTREE_DEFAULT_KEY_LENGTH*/)
+BPlusTree::BPlusTree( int nOrder/* = BPTREE_DEFAULT_ORDER*/, int nKeyLength/* = BPTREE_DEFAULT_KEY_LENGTH*/ )
 {
 	order = nOrder;
 	if(order < BPTREE_MIN_ORDER)
@@ -12,6 +12,8 @@ BPlusTree::BPlusTree(int nOrder/* = BPTREE_DEFAULT_ORDER*/, int nKeyLength/* = B
 	if(order > BPTREE_MAX_ORDER)
 		order = BPTREE_MAX_ORDER;
 	key_length = nKeyLength;
+	if(key_length < 0)
+		key_length = BPTREE_DEFAULT_KEY_LENGTH;
 	verbose_output = false;
 	queue = NULL;
 	root_node = NULL;
@@ -485,7 +487,7 @@ node * BPlusTree::insert_into_leaf( node * leaf, char * key, record * pointer )
  * the tree's order, causing the leaf to be split
  * in half.
  */
-node * BPlusTree::insert_into_leaf_after_splitting(node * root, node * leaf, char * key, record * pointer)
+node * BPlusTree::insert_into_leaf_after_splitting( node * root, node * leaf, char * key, record * pointer )
 {
 	node * new_leaf;
 	char ** temp_keys, * new_key;
@@ -1088,7 +1090,7 @@ node * BPlusTree::delete_entry( node * root, node * n, char * key, void * pointe
 		return redistribute_nodes(root, n, neighbor, neighbor_index, k_prime_index, k_prime);
 }
 
-node * BPlusTree::remove_entry_from_node(node * n, char * key, node * pointer)
+node * BPlusTree::remove_entry_from_node( node * n, char * key, node * pointer )
 {
 	int i, num_pointers;
 
@@ -1124,7 +1126,7 @@ node * BPlusTree::remove_entry_from_node(node * n, char * key, node * pointer)
 	return n;
 }
 
-node * BPlusTree::destroy_tree(node * root)
+node * BPlusTree::destroy_tree( node * root )
 {
 	if(root == NULL)
 		return NULL;
@@ -1132,7 +1134,7 @@ node * BPlusTree::destroy_tree(node * root)
 	return NULL;
 }
 
-void BPlusTree::destroy_tree_nodes(node * root)
+void BPlusTree::destroy_tree_nodes( node * root )
 {
 	int i;
 	if (root->is_leaf)
