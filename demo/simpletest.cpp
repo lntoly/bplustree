@@ -20,7 +20,7 @@ void usage_1( void )
 void usage_2( void )
 {
 	printf("Enter any of the following commands after the prompt > :\n");
-	printf("\ti <k>  -- Insert <k> (an integer) as both key and value).\n");
+	printf("\ti <k> <v>  -- Insert <k> (an integer) as key and <v> (an integer) as value).\n");
 	printf("\tf <k>  -- Find the value under key <k>.\n");
 	printf("\tp <k> -- Print the path from the root to key k and its associated value.\n");
 	printf("\td <k>  -- Delete key <k> and its associated value.\n");
@@ -43,7 +43,7 @@ void usage_3( void )
 int main(int argc, char ** argv)
 {
 	char instruction;
-	int input;
+	int input, value;
 	int order = BPTREE_DEFAULT_ORDER, key_length = BPTREE_DEFAULT_KEY_LENGTH;
 	bool verbose_output = false;
 	
@@ -74,8 +74,8 @@ int main(int argc, char ** argv)
 			bptree.PrintBPTree();
 			break;
 		case 'i':
-			scanf("%d", &input);
-			bptree.Insert(input, input);
+			scanf("%d %d", &input, &value);
+			bptree.Insert(input, value);
 			bptree.PrintBPTree();
 			break;
 		case 'f':
