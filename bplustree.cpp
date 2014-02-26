@@ -11,9 +11,9 @@ BPlusTree::BPlusTree( int nOrder/* = BPTREE_DEFAULT_ORDER*/, int nKeyLength/* = 
 		order = BPTREE_MIN_ORDER;
 	if(order > BPTREE_MAX_ORDER)
 		order = BPTREE_MAX_ORDER;
-	key_length = nKeyLength;
+	key_length = nKeyLength + 1;
 	if(key_length < 0)
-		key_length = BPTREE_DEFAULT_KEY_LENGTH;
+		key_length = BPTREE_DEFAULT_KEY_LENGTH + 1;
 	verbose_output = false;
 	queue = NULL;
 	root_node = NULL;
@@ -46,29 +46,68 @@ node * BPlusTree::Insert( int key, int value )
 {
 	char * key_str = (char *)malloc(key_length);
 	memset(key_str, 0, key_length);
-	sprintf(key_str, "%d", key);
+	char * bak_str = (char *)malloc(key_length);
+	memset(bak_str, 0, key_length);
+	sprintf(bak_str, "%d", key);
+	int i = 0;
+	for(i = 0; i < key_length; i++)
+	{
+		key_str[i] = '0';
+	}
+	key_str[key_length-1] = '\0';
+	for(i = 0; i < strlen(bak_str); i++)
+	{
+		key_str[key_length-2-i] = bak_str[strlen(bak_str)-1-i];
+	}
 	node * p = Insert(key_str, value);
 	free(key_str);
+	free(bak_str);
 	return p;
 }
 
 node * BPlusTree::Delete( int key )
 {
-	char * key_str = (char*)malloc(key_length);
+	char * key_str = (char *)malloc(key_length);
 	memset(key_str, 0, key_length);
-	sprintf(key_str, "%d", key);
+	char * bak_str = (char *)malloc(key_length);
+	memset(bak_str, 0, key_length);
+	sprintf(bak_str, "%d", key);
+	int i = 0;
+	for(i = 0; i < key_length; i++)
+	{
+		key_str[i] = '0';
+	}
+	key_str[key_length-1] = '\0';
+	for(i = 0; i < strlen(bak_str); i++)
+	{
+		key_str[key_length-2-i] = bak_str[strlen(bak_str)-1-i];
+	}
 	node * p = Delete(key_str);
 	free(key_str);
+	free(bak_str);
 	return p;
 }
 
 record * BPlusTree::Find( int key, bool verbose )
 {
-	char * key_str = (char*)malloc(key_length);
+	char * key_str = (char *)malloc(key_length);
 	memset(key_str, 0, key_length);
-	sprintf(key_str, "%d", key);
+	char * bak_str = (char *)malloc(key_length);
+	memset(bak_str, 0, key_length);
+	sprintf(bak_str, "%d", key);
+	int i = 0;
+	for(i = 0; i < key_length; i++)
+	{
+		key_str[i] = '0';
+	}
+	key_str[key_length-1] = '\0';
+	for(i = 0; i < strlen(bak_str); i++)
+	{
+		key_str[key_length-2-i] = bak_str[strlen(bak_str)-1-i];
+	}
 	record * p = Find(key_str, verbose);
 	free(key_str);
+	free(bak_str);
 	return p;
 }
 
@@ -94,11 +133,24 @@ void BPlusTree::FindAndPrint( char * key, bool verbose )
 
 void BPlusTree::FindAndPrint( int key, bool verbose )
 {
-	char * key_str = (char*)malloc(key_length);
+	char * key_str = (char *)malloc(key_length);
 	memset(key_str, 0, key_length);
-	sprintf(key_str, "%d", key);
+	char * bak_str = (char *)malloc(key_length);
+	memset(bak_str, 0, key_length);
+	sprintf(bak_str, "%d", key);
+	int i = 0;
+	for(i = 0; i < key_length; i++)
+	{
+		key_str[i] = '0';
+	}
+	key_str[key_length-1] = '\0';
+	for(i = 0; i < strlen(bak_str); i++)
+	{
+		key_str[key_length-2-i] = bak_str[strlen(bak_str)-1-i];
+	}
 	find_and_print(root_node, key_str, verbose);
 	free(key_str);
+	free(bak_str);
 }
 
 void BPlusTree::SetVerbose( bool verbose )
