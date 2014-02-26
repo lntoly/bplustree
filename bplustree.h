@@ -5,6 +5,11 @@
  *	@date 2014-02-14
  *	@version 1.0
  *
+ *	B+ tree key can be an integer or a string. The internal key is stored
+ *	as string. For example, user input an integer as a key, key length is
+ *	8, if key = 4, then the stored tree node key is '00000004'; User input
+ *	a string as a key, then the stored tree node key is as the string
+ *	that inputted.
  *	Must be compiled with a C99-compliant C compiler such as the latest GCC.
  *
  */
