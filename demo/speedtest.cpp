@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/time.h>
 #include "bplustree.h"
 
@@ -27,7 +28,8 @@ int main(int argc, char ** argv)
 	gettimeofday(&start, NULL);
 	for(i = 0; i < TOTAL_RECORD_NUM; i++)
 	{
-		int key = i+1;
+		//int key = i+1;
+		int key = rand()%TOTAL_RECORD_NUM;
 		record * rcd = bptree.Find(key, false);
 		if(rcd != NULL)
 		{
