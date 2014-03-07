@@ -1,4 +1,6 @@
-/*! @brief B+ Tree Implementation
+/******************************************************************************
+ *
+ *  @brief B+ Tree Implementation
  *
  *  @file bplustree.h
  *  @author xucp
@@ -12,7 +14,7 @@
  *  that inputted.
  *  Must be compiled with a C99-compliant C compiler such as the latest GCC.
  *
- */
+ *****************************************************************************/
 #ifndef _BPLUSTREE_HEADER
 #define _BPLUSTREE_HEADER
 
