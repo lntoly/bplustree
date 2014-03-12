@@ -26,7 +26,7 @@ int main(int argc, char ** argv)
 	printf("Insert time: %ldus\n", costtime);
 
 	gettimeofday(&start, NULL);
-	for(i = 0; i < TOTAL_RECORD_NUM; i++)
+	for(i = 1; i <= TOTAL_RECORD_NUM; i++)
 	{
 		//int key = i+1;
 		int key = rand()%TOTAL_RECORD_NUM;
@@ -43,6 +43,18 @@ int main(int argc, char ** argv)
 	gettimeofday(&end, NULL);
 	costtime = 1000000*(end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
 	printf("Select time: %ldus\n", costtime);
+
+    gettimeofday(&start, NULL);
+    for(i = 1; i <= TOTAL_RECORD_NUM; i++)
+    {
+        int key = rand()%TOTAL_RECORD_NUM;
+        bptree.Delete(key);
+    }
+    gettimeofday(&end, NULL);
+	costtime = 1000000*(end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
+    printf("Delete time: %ldus\n", costtime);
+
+    bptree.PrintBPTreeLeaves();
 
 	return 0;
 }
