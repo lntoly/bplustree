@@ -54,8 +54,6 @@ int main(int argc, char ** argv)
 	costtime = 1000000*(end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
     printf("Delete time: %ldus\n", costtime);
 
-    bptree.PrintBPTreeLeaves();
-
 	return 0;
 }
 
